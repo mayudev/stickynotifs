@@ -14,12 +14,20 @@ class NoteList extends StatelessWidget {
             physics: const ScrollPhysics(),
             itemCount: model.notes.length,
             itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(model.notes[index].content),
-                onTap: () => {
-                  Navigator.pushNamed(context, DetailsPage.routeName,
-                      arguments: DetailsPageArguments(model.notes[index].id!))
+              return Dismissible(
+                key: Key(model.notes[index].content),
+                onDismissed: (direction) {
+                  model.remove(model.notes[index].id!);
                 },
+                direction: DismissDirection.startToEnd,
+                background: Container(color: Colors.red),
+                child: ListTile(
+                  title: Text(model.notes[index].content),
+                  onTap: () => {
+                    Navigator.pushNamed(context, DetailsPage.routeName,
+                        arguments: DetailsPageArguments(model.notes[index].id!))
+                  },
+                ),
               );
             })));
   }
