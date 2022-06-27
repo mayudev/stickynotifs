@@ -8,9 +8,12 @@ ThemeData buildDarkTheme() {
           AppBarTheme(color: Colors.blue[200], foregroundColor: Colors.black),
       colorScheme: ColorScheme.dark(
         primary: Colors.blue[200]!,
+        secondary: Colors.blue[300]!,
         surface: Colors.blue,
-        onSurface: Colors.black,
+        onSurface: Colors.white,
       ),
+      toggleableActiveColor: Colors.blue[300]!,
+      splashColor: Colors.black38,
       inputDecorationTheme: inputDecodarionTheme);
 }
 

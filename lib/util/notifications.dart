@@ -5,6 +5,8 @@ import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/pages/details.dart';
 import 'package:stickynotifs/util/notes.dart';
 import 'package:stickynotifs/util/notification_mode.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationsService {
   final FlutterLocalNotificationsPlugin plugin =
@@ -28,6 +30,8 @@ class NotificationsService {
       linux: null,
     );
 
+    tz.initializeTimeZones();
+
     await plugin.initialize(initializationSettings,
         onSelectNotification: (payload) => onSelect(context, payload));
   }
@@ -43,8 +47,9 @@ class NotificationsService {
       final notes = context.read<NoteModel>();
       final note = notes.items.firstWhere((element) => element.id == id);
 
-      showNoteNotification(
-          note, DateTime.fromMillisecondsSinceEpoch(note.createdAt));
+      final date =
+          note.remindAt == 0 ? note.createdAt : note.remindAt ?? note.createdAt;
+      showNoteNotification(note, DateTime.fromMillisecondsSinceEpoch(date));
     }
   }
 
@@ -66,6 +71,21 @@ class NotificationsService {
   /// Cancel a notification by ID
   void cancel(int id) {
     plugin.cancel(id);
+  }
+
+  /// Schedule a notification
+  void schedule(int id, String title, String body, int timestamp,
+      NotificationChannel channel) {
+    plugin.zonedSchedule(
+        id,
+        title,
+        body,
+        tz.TZDateTime.fromMillisecondsSinceEpoch(tz.local, timestamp),
+        channel.value,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true,
+        payload: id.toString());
   }
 
   NotificationsService._internal();

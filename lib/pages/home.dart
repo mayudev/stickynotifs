@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
+import 'package:stickynotifs/pages/create.dart';
 import 'package:stickynotifs/util/notifications.dart';
 import 'package:stickynotifs/widgets/heading.dart';
 import 'package:stickynotifs/widgets/input.dart';
@@ -16,10 +17,17 @@ class HomePage extends StatelessWidget {
     NotificationsService().launchDetails().then((details) {
       print('${details?.didNotificationLaunchApp}');
       print('${details?.payload}');
+      // TODO onSelect integrate
     });
 
     return Scaffold(
       appBar: AppBar(title: const Text('StickyNotifs')),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, CreatePage.routeName);
+        },
+      ),
       body: GestureDetector(
         onTap: () {
           // Clear focus

@@ -37,9 +37,8 @@ class NoteModel extends ChangeNotifier {
 
     if (remindAt == 0) {
       showNoteNotification(note, now);
-      /* final time = DateFormat('HH:mm').format(now);
-      NotificationsService().show(note.id ?? 0, note.content, 'Today at $time',
-          NotificationChannel.sticky); */
+    } else {
+      scheduleNotification(note, remindAt);
     }
 
     notifyListeners();
