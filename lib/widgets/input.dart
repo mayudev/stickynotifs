@@ -57,9 +57,6 @@ class _NoteInputState extends State<NoteInput> {
       notes.add(value);
       controller.clear();
       FocusScope.of(context).unfocus();
-
-      Navigator.pushNamed(context, '/details',
-          arguments: DetailsPageArguments(10));
     }
   }
 

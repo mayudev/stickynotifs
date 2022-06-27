@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
+import 'package:stickynotifs/pages/details.dart';
 
 class NoteList extends StatelessWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -15,7 +16,10 @@ class NoteList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 title: Text(model.notes[index].content),
-                onTap: () => model.remove(model.notes[index].id!),
+                onTap: () => {
+                  Navigator.pushNamed(context, DetailsPage.routeName,
+                      arguments: DetailsPageArguments(model.notes[index].id!))
+                },
               );
             })));
   }
