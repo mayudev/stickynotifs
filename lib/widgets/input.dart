@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stickynotifs/models/note_model.dart';
+import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/widgets/heading.dart';
 
 class NoteInput extends StatefulWidget {
@@ -44,16 +44,24 @@ class _NoteInputState extends State<NoteInput> {
     );
   }
 
-  void handleNoteAdded(NoteModel cart) {
-    cart.add(controller.text);
+  void handleNoteAdded(NoteModel notes) {
+    final value = controller.text;
 
-    controller.clear();
-    FocusScope.of(context).unfocus();
+    if (value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          content:
+              Text("Enter content!", style: TextStyle(color: Colors.white))));
+    } else {
+      notes.add(value);
+      controller.clear();
+      FocusScope.of(context).unfocus();
+    }
   }
 
   Widget _buildButtons(BuildContext context) {
     const double margin = 8.0;
-    var cart = Provider.of<NoteModel>(context, listen: false);
+    var notes = Provider.of<NoteModel>(context, listen: false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -62,9 +70,9 @@ class _NoteInputState extends State<NoteInput> {
             margin: const EdgeInsets.all(margin),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(120, 40),
+                  minimumSize: const Size(120, 40),
                 ),
-                onPressed: () => handleNoteAdded(cart),
+                onPressed: () => handleNoteAdded(notes),
                 child: const Text('Add now')))
       ],
     );

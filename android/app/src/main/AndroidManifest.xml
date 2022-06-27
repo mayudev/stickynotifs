@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="gay.mayu.stickynotifs">
    <application
-        android:label="stickynotifs"
+        android:label="StickyNotifs"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

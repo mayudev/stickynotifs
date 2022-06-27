@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stickynotifs/models/note_model.dart';
+import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/widgets/heading.dart';
 import 'package:stickynotifs/widgets/input.dart';
 import 'package:stickynotifs/widgets/note_list.dart';

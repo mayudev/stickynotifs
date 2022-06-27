@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stickynotifs/models/note_model.dart';
+import 'package:stickynotifs/models/state.dart';
 
 class NoteList extends StatelessWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -12,7 +12,6 @@ class NoteList extends StatelessWidget {
             shrinkWrap: true,
             physics: const ScrollPhysics(),
             itemCount: model.notes.length,
-            reverse: true,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 title: Text(model.notes[index].content),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stickynotifs/pages/home.dart';
 import 'package:stickynotifs/theme.dart';
+import 'package:stickynotifs/util/notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationsService().init();
 
   runApp(const App());
 }

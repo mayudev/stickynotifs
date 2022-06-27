@@ -43,14 +43,9 @@ class NoteHelper {
     final List<Map<String, dynamic>> raw = await db.query(table);
 
     // Generate a List
-    return List.generate(raw.length, (i) {
-      return Note(
-          id: raw[i]['id'],
-          content: raw[i]['content'],
-          createdAt: raw[i]['createdAt'],
-          updatedAt: raw[i]['updatedAt'],
-          remindAt: raw[i]['remindAt']);
-    });
+    List<Note> list = raw.map((element) => Note.fromMap(element)).toList();
+
+    return list;
   }
 
   /// Updates a [Note]

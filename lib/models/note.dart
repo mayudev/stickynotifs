@@ -26,6 +26,13 @@ class Note {
     };
   }
 
+  factory Note.fromMap(Map<String, dynamic> raw) => Note(
+      id: raw['id'],
+      content: raw['content'],
+      createdAt: raw['createdAt'],
+      updatedAt: raw['updatedAt'],
+      remindAt: raw['remindAt']);
+
   @override
   String toString() {
     return 'Note(id: $id, content: $content, created: $createdAt, updated: $updatedAt, remind: $remindAt)';
