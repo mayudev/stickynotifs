@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stickynotifs/models/state.dart';
+import 'package:stickynotifs/pages/details.dart';
 import 'package:stickynotifs/pages/home.dart';
 import 'package:stickynotifs/theme.dart';
-import 'package:stickynotifs/util/notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationsService().init();
 
   runApp(const App());
 }
@@ -15,12 +16,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'StickyNotifs',
-        theme: buildDarkTheme(),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const HomePage(),
-        });
+    return MultiProvider(
+        providers: [ChangeNotifierProvider.value(value: NoteModel())],
+        child: MaterialApp(
+            title: 'StickyNotifs',
+            theme: buildDarkTheme(),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const HomePage(),
+              '/details': (context) => const DetailsPage()
+            }));
   }
 }

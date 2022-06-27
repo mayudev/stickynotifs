@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
+import 'package:stickynotifs/pages/details.dart';
 import 'package:stickynotifs/widgets/heading.dart';
 
 class NoteInput extends StatefulWidget {
@@ -56,6 +57,9 @@ class _NoteInputState extends State<NoteInput> {
       notes.add(value);
       controller.clear();
       FocusScope.of(context).unfocus();
+
+      Navigator.pushNamed(context, '/details',
+          arguments: DetailsPageArguments(10));
     }
   }
 
