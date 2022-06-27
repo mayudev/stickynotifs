@@ -1,0 +1,1 @@
+class MissingDataException implements Exception {}

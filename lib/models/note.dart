@@ -1,33 +1,33 @@
-import 'dart:collection';
+import 'package:sqflite/sqlite_api.dart';
+import 'package:stickynotifs/models/database.dart';
 
-import 'package:flutter/foundation.dart';
+class Note {
+  int? id;
+  final String content;
+  final int createdAt;
+  final int updatedAt;
+  final int? remindAt;
 
-class NoteModel extends ChangeNotifier {
-  /// Internal, private items
-  final List<String> _items = [];
+  Note({
+    required this.content,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.remindAt,
+    this.id,
+  });
 
-  /// An unmodifiable view of the items.
-  UnmodifiableListView<String> get items => UnmodifiableListView(_items);
-
-  /// A reversed unmodifiable view of items.
-  UnmodifiableListView<String> get notes =>
-      UnmodifiableListView(_items.reversed);
-
-  void add(String note) {
-    _items.add(note);
-
-    notifyListeners();
+  /// Convert a Note into a Map.
+  Map<String, dynamic> toMap() {
+    return {
+      'content': content,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'remindAt': remindAt,
+    };
   }
 
-  void remove(String note) {
-    _items.remove(note);
-
-    notifyListeners();
-  }
-
-  void removeAll() {
-    _items.clear();
-
-    notifyListeners();
+  @override
+  String toString() {
+    return 'Note(id: $id, content: $content, created: $createdAt, updated: $updatedAt, remind: $remindAt)';
   }
 }

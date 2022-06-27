@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -15,15 +13,13 @@ class NavigationDrawer extends StatelessWidget {
         ),
         child: Stack(children: const [
           Positioned(
-            bottom: 16.0, 
-            left: 16.0, 
-            child: Text(
-              'StickyNotifs',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25.0,
-              ))
-          )
+              bottom: 16.0,
+              left: 16.0,
+              child: Text('StickyNotifs',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25.0,
+                  )))
         ]),
       )
     ]));

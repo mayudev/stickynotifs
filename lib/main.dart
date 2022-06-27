@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stickynotifs/pages/home.dart';
 import 'package:stickynotifs/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const App());
 }
 
