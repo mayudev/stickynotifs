@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
-import 'package:stickynotifs/pages/details.dart';
+import 'package:stickynotifs/pages/create.dart';
 
 class NoteList extends StatefulWidget {
   const NoteList({Key? key, required this.current}) : super(key: key);
@@ -17,7 +17,7 @@ class NoteList extends StatefulWidget {
 class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
     });
 
@@ -38,9 +38,8 @@ class _NoteListState extends State<NoteList> {
               child: ListTile(
                 title: Text(list[index].content),
                 onTap: () => {
-                  Navigator.pushNamed(context, DetailsPage.routeName,
-                      arguments:
-                          DetailsPageArguments(list[index].id!)) // TODO fix
+                  Navigator.pushNamed(context, CreatePage.routeName,
+                      arguments: CreatePageArguments(list[index].id))
                 },
               ),
             );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/pages/create.dart';
-import 'package:stickynotifs/pages/details.dart';
 import 'package:stickynotifs/pages/home.dart';
 import 'package:stickynotifs/theme.dart';
 
@@ -25,7 +24,6 @@ class App extends StatelessWidget {
             initialRoute: '/',
             routes: {
               '/': (context) => const HomePage(),
-              '/details': (context) => const DetailsPage(),
               '/create': (context) => const CreatePage(),
             }));
   }

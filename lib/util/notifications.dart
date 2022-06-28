@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
-import 'package:stickynotifs/pages/details.dart';
+import 'package:stickynotifs/pages/create.dart';
 import 'package:stickynotifs/util/notes.dart';
 import 'package:stickynotifs/util/notification_mode.dart';
 // ignore: depend_on_referenced_packages
@@ -42,8 +42,8 @@ class NotificationsService {
     final id = int.tryParse(payload!);
 
     if (id != null) {
-      Navigator.pushNamed(context, DetailsPage.routeName,
-          arguments: DetailsPageArguments(id));
+      Navigator.pushNamed(context, CreatePage.routeName,
+          arguments: CreatePageArguments(id));
 
       /// Respawn the notification
       final notes = context.read<NoteModel>();

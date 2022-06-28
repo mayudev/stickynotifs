@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stickynotifs/models/note.dart';
 import 'package:stickynotifs/models/state.dart';
+
+class CreatePageArguments {
+  final int? editingId;
+
+  CreatePageArguments(this.editingId);
+}
 
 class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -13,11 +20,17 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
+  CreatePageArguments? args(BuildContext context) {
+    return ModalRoute.of(context)!.settings.arguments as CreatePageArguments?;
+  }
+
   final _content = TextEditingController();
 
   bool immediate = false;
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
+
+  Note? initialNote;
 
   @override
   void dispose() {
@@ -30,22 +43,73 @@ class _CreatePageState extends State<CreatePage> {
 
     var notes = Provider.of<NoteModel>(context, listen: false);
 
-    DateTime timestamp = DateTime(date.year, date.month, date.day, 0, 0, 0, 0);
-    int remindAt = immediate
-        ? 0
-        : timestamp
-            .add(Duration(hours: time.hour, minutes: time.minute))
-            .millisecondsSinceEpoch;
+    int remindAt = computeTimestamp();
 
     notes.add(value, remindAt: remindAt);
     Navigator.pop(context);
   }
 
+  void updateNote() {
+    final newNote = Note(
+        id: initialNote!.id!,
+        content: _content.text,
+        createdAt: initialNote!.createdAt,
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
+        remindAt: computeTimestamp());
+
+    final notes = Provider.of<NoteModel>(context, listen: false);
+
+    notes.updateNote(initialNote!.id!, newNote);
+    Navigator.pop(context);
+  }
+
+  void deleteNote() {
+    Navigator.pop(context);
+
+    final notes = Provider.of<NoteModel>(context, listen: false);
+    notes.remove(initialNote!.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final int? editingId = args(context)?.editingId;
+    final bool isEditing = editingId != null;
+
+    try {
+      if (isEditing && initialNote == null) {
+        Note note;
+
+        final model = context.watch<NoteModel>();
+        note = model.getNoteById(editingId);
+
+        _content.value = TextEditingValue(
+            text: note.content,
+            selection: TextSelection.collapsed(offset: note.content.length));
+
+        if (note.remindAt == null || note.remindAt == 0) {
+          immediate = true;
+        } else {
+          date = DateTime.fromMillisecondsSinceEpoch(note.remindAt!);
+          time = TimeOfDay.fromDateTime(date);
+        }
+
+        initialNote = note;
+      }
+    } catch (e) {}
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Create new note'),
+          title: Text(isEditing ? 'Edit note' : 'Create a new note'),
+          actions: isEditing
+              ? [
+                  IconButton(
+                      onPressed: () {
+                        deleteNote();
+                      },
+                      tooltip: 'Delete',
+                      icon: const Icon(Icons.delete, color: Colors.black))
+                ]
+              : [],
         ),
         floatingActionButton: ValueListenableBuilder<TextEditingValue>(
             valueListenable: _content,
@@ -56,7 +120,11 @@ class _CreatePageState extends State<CreatePage> {
 
               return FloatingActionButton(
                 onPressed: () {
-                  addNote();
+                  if (isEditing) {
+                    updateNote();
+                  } else {
+                    addNote();
+                  }
                 },
                 child: const Icon(Icons.check),
               );
@@ -65,7 +133,7 @@ class _CreatePageState extends State<CreatePage> {
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
           children: [
             TextField(
-              autofocus: true,
+              autofocus: !isEditing,
               autocorrect: true,
               controller: _content,
               decoration: const InputDecoration(
@@ -136,5 +204,16 @@ class _CreatePageState extends State<CreatePage> {
         ),
       )
     ]);
+  }
+
+  int computeTimestamp() {
+    DateTime timestamp = DateTime(date.year, date.month, date.day, 0, 0, 0, 0);
+    int remindAt = immediate
+        ? 0
+        : timestamp
+            .add(Duration(hours: time.hour, minutes: time.minute))
+            .millisecondsSinceEpoch;
+
+    return remindAt;
   }
 }

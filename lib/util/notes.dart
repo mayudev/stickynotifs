@@ -22,6 +22,7 @@ void handleNotification(Note note, DateTime now, int remindAt) {
   final nowMS = now.millisecondsSinceEpoch;
 
   if (remindAt > nowMS) {
+    NotificationsService().cancel(note.id!);
     scheduleNotification(note, remindAt);
   } else {
     showNoteNotification(note, now);
