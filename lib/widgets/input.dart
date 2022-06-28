@@ -50,6 +50,7 @@ class _NoteInputState extends State<NoteInput> {
     if (value.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           duration: Duration(seconds: 1),
+          backgroundColor: Colors.black,
           content:
               Text("Enter content!", style: TextStyle(color: Colors.white))));
     } else {

@@ -198,6 +198,13 @@ class _CreatePageState extends State<CreatePage> {
                       final result = await showTimePicker(
                         context: context,
                         initialTime: time,
+                        builder: (context, child) {
+                          return Theme(
+                              data: Theme.of(context).copyWith(
+                                  colorScheme: const ColorScheme.dark(
+                                      primary: Colors.blue)),
+                              child: child!);
+                        },
                       );
 
                       setState(() {
