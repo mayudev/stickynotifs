@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -181,7 +183,9 @@ class _CreatePageState extends State<CreatePage> {
                         if (result != null) date = result;
                       });
                     },
-              child: Text(DateFormat.yMMMMd().format(date).toString())),
+              child: Text(DateFormat.yMMMMd(Platform.localeName)
+                  .format(date)
+                  .toString())),
         ),
       ),
       Expanded(

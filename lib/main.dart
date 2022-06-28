@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/pages/create.dart';
@@ -7,6 +10,8 @@ import 'package:stickynotifs/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting(Platform.localeName, null);
 
   runApp(const App());
 }
