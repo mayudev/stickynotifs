@@ -13,9 +13,12 @@ class HomePage extends StatelessWidget {
     NotificationsService().init(context);
 
     NotificationsService().launchDetails().then((details) {
-      print('${details?.didNotificationLaunchApp}');
-      print('${details?.payload}');
-      // TODO onSelect integrate
+      if (details != null &&
+          details.payload != null &&
+          details.didNotificationLaunchApp &&
+          details.payload!.isNotEmpty) {
+        NotificationsService().onSelect(context, details.payload);
+      }
     });
 
     return Scaffold(
