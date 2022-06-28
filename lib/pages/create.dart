@@ -40,6 +40,10 @@ class _CreatePageState extends State<CreatePage> {
     super.dispose();
   }
 
+  void pop() {
+    Navigator.pop(context);
+  }
+
   void addNote() {
     final value = _content.text;
 
@@ -48,7 +52,7 @@ class _CreatePageState extends State<CreatePage> {
     int remindAt = computeTimestamp();
 
     notes.add(value, remindAt: remindAt);
-    Navigator.pop(context);
+    pop();
   }
 
   void updateNote() {
@@ -62,11 +66,11 @@ class _CreatePageState extends State<CreatePage> {
     final notes = Provider.of<NoteModel>(context, listen: false);
 
     notes.updateNote(initialNote!.id!, newNote);
-    Navigator.pop(context);
+    pop();
   }
 
   void deleteNote() {
-    Navigator.pop(context);
+    pop();
 
     final notes = Provider.of<NoteModel>(context, listen: false);
     notes.remove(initialNote!.id!);
