@@ -1,6 +1,3 @@
-import 'package:sqflite/sqlite_api.dart';
-import 'package:stickynotifs/models/database.dart';
-
 class Note {
   int? id;
   final String content;

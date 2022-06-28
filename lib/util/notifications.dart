@@ -5,7 +5,9 @@ import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/pages/details.dart';
 import 'package:stickynotifs/util/notes.dart';
 import 'package:stickynotifs/util/notification_mode.dart';
+// ignore: depend_on_referenced_packages
 import 'package:timezone/data/latest.dart' as tz;
+// ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationsService {

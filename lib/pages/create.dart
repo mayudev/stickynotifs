@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/state.dart';
@@ -108,7 +107,7 @@ class _CreatePageState extends State<CreatePage> {
                           context: context,
                           initialDate: date,
                           firstDate: DateTime.now(),
-                          lastDate: DateTime(DateTime.now().year + 100));
+                          lastDate: DateTime(year + 100));
 
                       setState(() {
                         if (result != null) date = result;

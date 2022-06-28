@@ -1,11 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:stickynotifs/models/database.dart';
 import 'package:stickynotifs/models/note.dart';
 import 'package:stickynotifs/util/notes.dart';
-import 'package:stickynotifs/util/notification_mode.dart';
 import 'package:stickynotifs/util/notifications.dart';
 
 class NoteModel extends ChangeNotifier {
