@@ -39,7 +39,11 @@ class HomePage extends StatelessWidget {
           children: const [
             NoteInput(),
             Heading(text: 'Current notes'),
-            NoteList(),
+            NoteList(
+              current: true,
+            ),
+            Heading(text: 'Pending notes'),
+            NoteList(current: false)
           ],
         ),
       ),
