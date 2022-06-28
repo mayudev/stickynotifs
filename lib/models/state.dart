@@ -35,7 +35,7 @@ class NoteModel extends ChangeNotifier {
 
     if (remindAt == 0) {
       showNoteNotification(note, now);
-    } else {
+    } else if (remindAt > nowMS) {
       scheduleNotification(note, remindAt);
     }
 
