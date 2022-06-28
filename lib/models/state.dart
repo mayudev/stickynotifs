@@ -1,13 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/database.dart';
 import 'package:stickynotifs/models/note.dart';
 import 'package:stickynotifs/util/notes.dart';
 import 'package:stickynotifs/util/notifications.dart';
 
-class NoteModel extends ChangeNotifier implements ReassembleHandler {
+class NoteModel extends ChangeNotifier {
   /// Internal, private items
   List<Note> _items = [];
 
@@ -93,10 +92,5 @@ class NoteModel extends ChangeNotifier implements ReassembleHandler {
     _items.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void reassemble() {
-    print('Did hot-reload');
   }
 }
