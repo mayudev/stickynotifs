@@ -1,12 +1,13 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:stickynotifs/models/database.dart';
 import 'package:stickynotifs/models/note.dart';
 import 'package:stickynotifs/util/notes.dart';
 import 'package:stickynotifs/util/notifications.dart';
 
-class NoteModel extends ChangeNotifier {
+class NoteModel extends ChangeNotifier implements ReassembleHandler {
   /// Internal, private items
   List<Note> _items = [];
 
@@ -62,6 +63,12 @@ class NoteModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Note getNoteById(int id) {
+    final note = _items.firstWhere((element) => element.id == id);
+
+    return note;
+  }
+
   void remove(int id) async {
     final note = _items.firstWhere((element) => element.id == id);
     _items.remove(note);
@@ -77,5 +84,10 @@ class NoteModel extends ChangeNotifier {
     _items.clear();
 
     notifyListeners();
+  }
+
+  @override
+  void reassemble() {
+    print('Did hot-reload');
   }
 }
