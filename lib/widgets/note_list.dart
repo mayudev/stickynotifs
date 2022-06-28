@@ -28,7 +28,8 @@ class NoteList extends StatelessWidget {
                 title: Text(list[index].content),
                 onTap: () => {
                   Navigator.pushNamed(context, DetailsPage.routeName,
-                      arguments: DetailsPageArguments(list[index].id!))
+                      arguments:
+                          DetailsPageArguments(list[index].id!)) // TODO fix
                 },
               ),
             );

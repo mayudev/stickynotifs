@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stickynotifs/models/note.dart';
 import 'package:stickynotifs/models/state.dart';
 import 'package:stickynotifs/theme.dart';
 import 'package:stickynotifs/widgets/heading.dart';
@@ -65,24 +66,32 @@ class _DetailsPageState extends State<DetailsPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            final newNote = Note(
+                id: note.id!,
+                content: _controller.text,
+                createdAt: note.createdAt,
+                remindAt: note.remindAt,
+                updatedAt: note.updatedAt);
+
+            model.updateNote(note.id!, newNote);
+          },
           child: const Icon(Icons.edit),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
           children: [
-            const Heading(text: 'Content'),
             TextField(
               controller: _controller,
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue[300]!)),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                alignLabelWithHint: true,
+                label: Text('Note...'),
               ),
               style: const TextStyle(
                 fontSize: 18.0,
               ),
               maxLines: null,
-              enabled: false,
             ),
             ListTile(
               title: const Text('Added'),

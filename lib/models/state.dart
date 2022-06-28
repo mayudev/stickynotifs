@@ -43,11 +43,7 @@ class NoteModel extends ChangeNotifier implements ReassembleHandler {
 
     // Trigger a new notification
 
-    if (remindAt == 0) {
-      showNoteNotification(note, now);
-    } else if (remindAt > nowMS) {
-      scheduleNotification(note, remindAt);
-    }
+    handleNotification(note, now, remindAt);
 
     notifyListeners();
   }
@@ -67,6 +63,19 @@ class NoteModel extends ChangeNotifier implements ReassembleHandler {
     final note = _items.firstWhere((element) => element.id == id);
 
     return note;
+  }
+
+  void updateNote(int id, Note note) async {
+    final index = _items.indexWhere((element) => element.id == id);
+    if (index > -1) {
+      _items[index] = note;
+
+      await NoteHelper.updateNote(id, note);
+      notifyListeners();
+
+      // TODO notification stuff
+      handleNotification(note, DateTime.now(), note.remindAt ?? 0);
+    }
   }
 
   void remove(int id) async {

@@ -17,3 +17,13 @@ void scheduleNotification(Note note, int remindAt) {
   NotificationsService().schedule(note.id ?? 0, note.content, 'Today at $time',
       remindAt, NotificationChannel.sticky);
 }
+
+void handleNotification(Note note, DateTime now, int remindAt) {
+  final nowMS = now.millisecondsSinceEpoch;
+
+  if (remindAt > nowMS) {
+    scheduleNotification(note, remindAt);
+  } else {
+    showNoteNotification(note, now);
+  }
+}
